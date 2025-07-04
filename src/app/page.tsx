@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Search, Menu, MapPin, Calendar, Users, Star, Heart, Share2, Sparkles, Brain, Zap, MessageCircle, Globe, Camera } from "lucide-react"
+import { Menu, Calendar, Heart, Share2, Sparkles, Brain, Zap, MessageCircle, Globe, Camera } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
