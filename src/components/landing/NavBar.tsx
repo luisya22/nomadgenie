@@ -1,7 +1,7 @@
 import { Menu, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 
-export default function NavBar({isScrolled, navOpacity}: {isScrolled: boolean, navOpacity: number}) {
+export default function NavBar({isScrolled, navOpacity, scrollY}: {isScrolled: boolean, navOpacity: number, scrollY: number}) {
     return (
         <nav
           className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${

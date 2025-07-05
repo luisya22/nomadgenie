@@ -37,7 +37,7 @@ export default function TravelApp() {
         </div>
 
         {/* Navigation Bar */}
-        <NavBar isScrolled={isScrolled} navOpacity={navOpacity}/>
+        <NavBar isScrolled={isScrolled} navOpacity={navOpacity} scrollY={scrollY}/>
 
         {/* Hero Content */}
         <Hero/>
