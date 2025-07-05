@@ -36,4 +36,4 @@ NomadGenie is built using modern web technologies:
 ---
 ### ▶️ See NomadGenie in Action!
 Check out a live demo of the project here:
-[Nomad Genie Demo](nomadgenie.vercel.app)
+[Nomad Genie Demo](https://nomadgenie.vercel.app)
