@@ -1,5 +1,6 @@
 import { Menu, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export default function NavBar({isScrolled, navOpacity, scrollY}: {isScrolled: boolean, navOpacity: number, scrollY: number}) {
     return (
@@ -26,7 +27,7 @@ export default function NavBar({isScrolled, navOpacity, scrollY}: {isScrolled: b
                   {["AI Planner", "Community", "My Trips", "Explore"].map((item) => (
                     <a
                       key={item}
-                      href="#"
+                      href="/app"
                       className={`transition-colors duration-300 hover:text-blue-600 ${
                         isScrolled ? "text-gray-700" : scrollY > 150 ? "text-gray-700" : "text-white"
                       }`}
@@ -37,23 +38,30 @@ export default function NavBar({isScrolled, navOpacity, scrollY}: {isScrolled: b
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <Button
-                  variant={isScrolled || scrollY > 150 ? "outline" : "secondary"}
-                  size="sm"
-                  className="hidden sm:inline-flex"
-                >
-                  Sign In
-                </Button>
-                 <Button
-                  className={`hidden sm:inline-flex cursor-pointer ${
-                    isScrolled || scrollY > 150
-                      ? "bg-amber-200 text-amber-700 hover:bg-amber-700"
-                      : "bg-white text-gray-900 hover:bg-gray-100"
-                  }`}
-                >
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Try AI Planner
-                </Button>
+                <SignedOut>
+                    <Button
+                      className={`hidden sm:inline-flex cursor-pointer ${
+                        isScrolled || scrollY > 150
+                          ? "bg-amber-200 text-amber-700 hover:bg-amber-700"
+                          : "bg-white text-gray-900 hover:bg-gray-100"
+                      }`}
+                    >
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      Try AI Planner
+                    </Button>
+                    <SignInButton>
+                        <Button
+                            variant={isScrolled || scrollY > 150 ? "outline" : "secondary"}
+                            size="sm"
+                            className="hidden sm:inline-flex cursor-pointer"
+                        >
+                            Sign In
+                        </Button>
+                    </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                    <UserButton/>
+                </SignedIn> 
                 <Button
                   variant="ghost"
                   size="sm"

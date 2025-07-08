@@ -1,0 +1,200 @@
+import { Calendar, Clock, Edit3, Heart, MapPin, Plus, Star } from "lucide-react";
+import { Card, CardContent } from "../ui/card";
+import { Button } from "../ui/button";
+import { useState } from "react";
+import Image from "next/image"
+import { Badge } from "../ui/badge";
+
+
+interface Attraction {
+  id: string
+  name: string
+  rating: number
+  reviews: string
+  description: string
+  image: string
+  category: string
+  time?: string
+}
+
+export default function Itinerary(){
+
+    const [selectedDates, setSelectedDates] = useState(["Feb 10"]);
+
+    const attractions: Attraction[] = [
+        {
+            id: "1",
+            name: "Brunch & Cake",
+            rating: 4.3,
+            reviews: "8.6k reviews",
+            description: "Instagram-worthy brunch spot with creative dishes and beautiful presentation",
+            image: "/images/restaurante.jpg",
+            category: "Restaurant",
+            time: "9:00 AM",
+        },
+        {
+            id: "2",
+            name: "Sagrada Familia",
+            rating: 4.8,
+            reviews: "292k reviews",
+            description: "Gaudí's masterpiece basilica with breathtaking architecture and tower views",
+            image: "/images/sagradafamilia.webp",
+            category: "Attraction",
+            time: "11:30 AM",
+        },
+        {
+            id: "3",
+            name: "Park Güell",
+            rating: 4.6,
+            reviews: "156k reviews",
+            description: "Whimsical park with colorful mosaics and panoramic city views",
+            image: "/images/parc-guell.jpg",
+            category: "Attraction",
+            time: "2:00 PM",
+        },
+    ]
+
+
+    return (
+        <div>
+            <Card className="overflow-hidden border-0 shadow-xl bg-white pt-0">
+                <div className="relative h-72">
+                    <Image
+                        src={'/images/europe.jpg'}
+                        alt={'travel'}
+                        fill
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"/>
+                    <div className="absolute bottom-6 left-6 text-white">
+                        <h1 className="text-4xl font-bold mb-2">Barcelona</h1>
+                        <div className="flex items-center gap-2 text-lg opacity-90">
+                            <MapPin className="w-5 h-5"/>
+                            Spain
+                        </div>
+                    </div>
+                    <div className="absolute top-6 right-6 flex gap-3">
+                        <Button size="sm" className="bg-white/20 backdrop-blur-md border-white/30 hover:bg-white/30">
+                            <Heart className="w-4 h-4"/>
+                        </Button>
+                        <Button size="sm" className="bg-white/20 backdrop-blur-md border-white/30 hover:bg-white/30">
+                            All Photos
+                        </Button>
+                    </div>
+                </div>
+
+                <CardContent className="p-6">
+                    <div className="mb-8">
+                        <h3 className="text-xl font-bold mb-3 text-gray-800">Overview</h3>
+                        <p className="text-gray-600 leading-relaxed mb-6">
+                            Barcelona is a vibrant coastal city in Spain known for its stunning mix of Gothic and modernist
+                            architecture, lively street life, and world-class cuisine. From Gaudís iconic Sagrada Familia to
+                            the beaches of Barceloneta, it offers a rich blend of culture, history, and Mediterranean charm.
+                        </p>
+                        <div className="flex gap-2 flex-wrap">
+                            {["Feb 10", "Feb 11", "Feb 12", "Feb 13"].map((date) => (
+                                <Button
+                                    key={date}
+                                    size="sm"
+                                    variant={selectedDates.includes(date) ? "default" : "outline"}
+                                    onClick={() => {
+                                        if (selectedDates.includes(date)) {
+                                            setSelectedDates(selectedDates.filter((d) => d !== date))
+                                        } else {
+                                            setSelectedDates([...selectedDates, date]);
+                                        }
+                                    }}
+                                    className={
+                                        `cursor-pointer ${selectedDates.includes(date)
+? "bg-yellow-200 hover:bg-amber-400 text-amber-800"
+: "border-gray-300 hover:bg-gray-50"
+}`
+                                    }
+                                >
+                                    {date} 
+                                </Button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="border-t border-gray-200 my-6"></div>
+
+                    <div>
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+                                <Calendar className="w-6 h-6 text-amber-200"/>
+                                Your Itinerary
+                            </h3>
+                            <Button size="sm" className="bg-amber-200 text-amber-800 hover:bg-yellow-400">
+                                <Edit3 className="w-4 h-4 mr-2"/>
+                                Edit Plan
+                            </Button>
+                        </div>
+
+                        <div className="space-y-4">
+                            {attractions.map((attraction, index) => (
+                                <div
+                                    key={attraction.id}
+                                    className="group relative overflow-hidden roundedx-xl bg-gray-50 p-5 hover:shadow-lg transition-all duration-300 border border-gray-200"
+                                >
+                                    <div className="flex items-center justify-center gap-4">
+                                        <div className="flex flex-col items-center justify-center flex-shrink-0">
+                                            <div className="w-8 h-8 bg-amber-200 rounded-full flex items-center justify-center text-amber-800 font-bold text-sm mb-2">
+                                                {index + 1}
+                                            </div>
+                                        </div>
+                                        <div className="w-20 h-20 rounded-xl overflow-hidden">
+                                            <img
+                                                src={attraction.image || "/placeholder.svg"}
+                                                alt={attraction.name}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <h4 className="font-bold text-lg text-gray-800">{attraction.name}</h4>
+                                                <Button
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                >
+                                                    <Edit3 className="w-4 h-4"/>
+                                                </Button>
+                                            </div>
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <div className="flex items-center gap-1">
+                                                    <Star className="w-4 h-4 fill-amber-400 text-amber-400"/>
+                                                    <span className="font-semibold">{attraction.rating}</span>
+                                                </div>
+                                                <span className="text-sm text-gray-500">({attraction.reviews})</span>
+                                                {attraction.time && (
+                                                    <>
+                                                        <span className="text-gray-400">•</span>
+                                                        <Badge className="bg-amber-200 text-amber-800 hover:bg-amber-400 flex items-center gap-1">
+                                                            <Clock className="w-3 h-3"/>
+                                                            {attraction.time}
+                                                        </Badge>
+                                                    </>
+                                                )}
+                                            </div>
+                                            <p className="text-sm text-gray-600 line-clamp-2">{attraction.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+
+                            <div className="flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-xl hover:border-amber-200 hover:bg-gray-50 transition-colors cursor-pointer group">
+                                <div className="text-center">
+                                    <div className="w-12 h-12 bg-gray-100 group-hover:bg-amber-200 rounded-full flex items-center justify-center mx-auto mb-2 transition-colors">
+                                        <Plus className="w-6 h-6 text-gray-600 group-hover:text-gray-800"/>
+                                    </div>
+                                    <p className="text-gray-600 font-medium">Add more to your itinerary</p>
+                                    <p className="text-sm text-gray-500">Use the suggestions on the right →</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+    );
+}
