@@ -1,6 +1,7 @@
 import { Menu, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function NavBar({isScrolled, navOpacity, scrollY}: {isScrolled: boolean, navOpacity: number, scrollY: number}) {
     return (
@@ -24,17 +25,21 @@ export default function NavBar({isScrolled, navOpacity, scrollY}: {isScrolled: b
                   Nomad<span className="text-amber-300">Genie</span>
                 </h1>
                 <div className="hidden md:flex space-x-6">
-                  {["AI Planner", "Community", "My Trips", "Explore"].map((item) => (
-                    <a
-                      key={item}
-                      href="/app"
-                      className={`transition-colors duration-300 hover:text-blue-600 ${
+                    <Link href='/travel-planner' className={`transition-colors duration-300 hover:text-blue-600 ${
                         isScrolled ? "text-gray-700" : scrollY > 150 ? "text-gray-700" : "text-white"
-                      }`}
-                    >
-                      {item}
-                    </a>
-                  ))}
+                      }`}>AI Planner</Link>
+
+                    <Link href='/community' className={`transition-colors duration-300 hover:text-blue-600 ${
+                        isScrolled ? "text-gray-700" : scrollY > 150 ? "text-gray-700" : "text-white"
+                      }`}>Community</Link>
+
+                    <Link href='/trips' className={`transition-colors duration-300 hover:text-blue-600 ${
+                        isScrolled ? "text-gray-700" : scrollY > 150 ? "text-gray-700" : "text-white"
+                      }`}>Trips</Link>
+
+                    <Link href='/explore' className={`transition-colors duration-300 hover:text-blue-600 ${
+                        isScrolled ? "text-gray-700" : scrollY > 150 ? "text-gray-700" : "text-white"
+                      }`}>Explore</Link>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
