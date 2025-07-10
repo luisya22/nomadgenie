@@ -13,3 +13,5 @@ export const tripFormSchema = z.object({
     message: "To date cannot be before From date.",
     path: ["toDate"]
 });
+
+export type TripFormValues = z.infer<typeof tripFormSchema>;
