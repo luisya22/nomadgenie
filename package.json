@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "drizzle-kit migrate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
     "drizzle:generate": "drizzle-kit generate"
   },
   "dependencies": {
