@@ -3,9 +3,8 @@ import Itinerary from "@/components/trips/Itinerary";
 import TripBuilder from "@/components/trips/TripBuilderPages";
 
 interface CustomPageProps {
-    params: {
-        tripId: string;
-    }
+    params: { [key: string]: string | string[] }; // This is the correct type for dynamic route params
+    searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export default async function AppPage(pageProps: CustomPageProps) {
@@ -14,7 +13,7 @@ export default async function AppPage(pageProps: CustomPageProps) {
     // TODO: Processing screen until trip is Ready
     // TODO: Make GPT Generate a trip
     const params = pageProps.params;
-    const tripId = parseInt(params.tripId, 10);
+    const tripId = parseInt(params["tripId"] as string, 10);
     const trip = await getTripById(tripId)
 
     return (
