@@ -2,14 +2,19 @@ import { getTripById } from "@/actions/tripActions";
 import Itinerary from "@/components/trips/Itinerary";
 import TripBuilder from "@/components/trips/TripBuilderPages";
 
+interface CustomPageProps {
+    params: {
+        tripId: string;
+    }
+}
 
-export default async function AppPage({params}: {params: {tripId: string}}) {
+export default async function AppPage(pageProps: CustomPageProps) {
     // TODO: Load trip data by tripId on the params
     // TODO: on addTrip action send SQS
     // TODO: Processing screen until trip is Ready
     // TODO: Make GPT Generate a trip
-
-    const tripId = parseInt(params?.tripId, 10);
+    const params = pageProps.params;
+    const tripId = parseInt(params.tripId, 10);
     const trip = await getTripById(tripId)
 
     return (
