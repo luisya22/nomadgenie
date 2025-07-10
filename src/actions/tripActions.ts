@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { tripFormSchema } from "@/lib/validations/trip";
 import { redirect } from "next/navigation";
 import { sendMessage } from "@/lib/sqs";
+import { eq } from "drizzle-orm";
 
 interface ActionState {
     message: string;
@@ -18,6 +19,12 @@ interface ActionState {
 export async function getTrips() {
     const data: Trip[] = await db.select().from(trips);
     return data;
+}
+
+export async function getTripById(id: number) {
+    const [trip] = await db.select().from(trips).where(eq(trips.id, id));
+
+    return trip;
 }
 
 export async function addTrip(prevState: ActionState, formData: FormData): Promise<ActionState> {

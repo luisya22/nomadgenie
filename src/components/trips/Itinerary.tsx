@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import Image from "next/image"
 import { Badge } from "../ui/badge";
+import { type Trip } from "@/db/schema";
 
 
 interface Attraction {
@@ -19,9 +20,14 @@ interface Attraction {
   time?: string
 }
 
-export default function Itinerary(){
+interface ItineraryProps{
+    trip: Trip
+}
+
+export default function Itinerary({trip}: ItineraryProps){
 
     const [selectedDates, setSelectedDates] = useState(["Feb 10"]);
+    const [] = useState();
 
     const attractions: Attraction[] = [
         {
@@ -68,10 +74,10 @@ export default function Itinerary(){
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"/>
                     <div className="absolute bottom-6 left-6 text-white">
-                        <h1 className="text-4xl font-bold mb-2">Barcelona</h1>
+                        <h1 className="text-4xl font-bold mb-2">{ trip.city }</h1>
                         <div className="flex items-center gap-2 text-lg opacity-90">
                             <MapPin className="w-5 h-5"/>
-                            Spain
+                            { trip.country }
                         </div>
                     </div>
                     <div className="absolute top-6 right-6 flex gap-3">
@@ -88,9 +94,7 @@ export default function Itinerary(){
                     <div className="mb-8">
                         <h3 className="text-xl font-bold mb-3 text-gray-800">Overview</h3>
                         <p className="text-gray-600 leading-relaxed mb-6">
-                            Barcelona is a vibrant coastal city in Spain known for its stunning mix of Gothic and modernist
-                            architecture, lively street life, and world-class cuisine. From Gaudís iconic Sagrada Familia to
-                            the beaches of Barceloneta, it offers a rich blend of culture, history, and Mediterranean charm.
+                            { trip.city } is a captivating destination in { trip.country }, renowned for its vibrant culture and stunning landmarks. With a rich tapestry of historical charm and a dynamic atmosphere, it offers visitors a delightful blend of exploration, relaxation, and unique experiences.
                         </p>
                         <div className="flex gap-2 flex-wrap">
                             {["Feb 10", "Feb 11", "Feb 12", "Feb 13"].map((date) => (
