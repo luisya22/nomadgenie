@@ -74,10 +74,10 @@ export default function Itinerary({trip}: ItineraryProps){
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"/>
                     <div className="absolute bottom-6 left-6 text-white">
-                        <h1 className="text-4xl font-bold mb-2">{ trip.city }</h1>
+                        <h1 className="text-4xl font-bold mb-2">{ trip?.city }</h1>
                         <div className="flex items-center gap-2 text-lg opacity-90">
                             <MapPin className="w-5 h-5"/>
-                            { trip.country }
+                            { trip?.country }
                         </div>
                     </div>
                     <div className="absolute top-6 right-6 flex gap-3">
@@ -94,7 +94,7 @@ export default function Itinerary({trip}: ItineraryProps){
                     <div className="mb-8">
                         <h3 className="text-xl font-bold mb-3 text-gray-800">Overview</h3>
                         <p className="text-gray-600 leading-relaxed mb-6">
-                            { trip.city } is a captivating destination in { trip.country }, renowned for its vibrant culture and stunning landmarks. With a rich tapestry of historical charm and a dynamic atmosphere, it offers visitors a delightful blend of exploration, relaxation, and unique experiences.
+                            { trip?.city } is a captivating destination in { trip?.country }, renowned for its vibrant culture and stunning landmarks. With a rich tapestry of historical charm and a dynamic atmosphere, it offers visitors a delightful blend of exploration, relaxation, and unique experiences.
                         </p>
                         <div className="flex gap-2 flex-wrap">
                             {["Feb 10", "Feb 11", "Feb 12", "Feb 13"].map((date) => (
