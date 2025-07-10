@@ -71,10 +71,8 @@ export default function TripForm(){
 
     const { pending } = useFormStatus(); 
 
-    const onSubmit = form.handleSubmit(async (data: TripFormValues) => {
+    const onSubmit = async (data: TripFormValues) => {
         form.clearErrors();
-
-        console.log("Here", data);
 
         const formData = new FormData();
 
@@ -90,7 +88,6 @@ export default function TripForm(){
         });
 
         const result = await addTrip(formState, formData);
-        console.log("Did this", result);
 
         if (result?.errors) {
             for (const [fieldName, errorMessages] of Object.entries(result.errors)) {
@@ -107,7 +104,7 @@ export default function TripForm(){
                 }
             }
         } 
-    });
+    };
 
     const cityOptions = useMemo(() => {
         return cities.map((city) => {
