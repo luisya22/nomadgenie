@@ -5,6 +5,8 @@ import { db } from "../db/drizzle";
 import { type Trip, trips } from "../db/schema";
 import { revalidatePath } from "next/cache";
 import { tripFormSchema } from "@/lib/validations/trip";
+import { redirect } from "next/navigation";
+import { sendMessage } from "@/lib/sqs";
 
 interface ActionState {
     message: string;
@@ -20,17 +22,21 @@ export async function getTrips() {
 
 export async function addTrip(prevState: ActionState, formData: FormData): Promise<ActionState> {
     const {userId} = await auth();
-
-    console.log("Bro");
-    
+ 
     if(!userId) {
         return { message: 'Authentication required. Please log in to add trip.'};
     }
 
+
     const rawData = {
+        destination: formData.get('destination'),
         fromDate: formData.get('fromDate'),
-        toDate: formData.get('toDate')
+        toDate: formData.get('toDate'),
+        budget: formData.get('budget'), 
+        activities: formData.getAll('activities'),
+        travelGroup: formData.get('travelGroup')
     };
+
 
     const validationResult = tripFormSchema.safeParse(rawData);
 
@@ -49,23 +55,47 @@ export async function addTrip(prevState: ActionState, formData: FormData): Promi
         return { message: 'Validation failed.', errors };
     }
 
-    const { fromDate, toDate } = validationResult.data;
+    const { fromDate, toDate, destination, budget, activities } = validationResult.data;
+
+    // TODO: Maybe better way to do it directly with zod?
+    const destinationArr = destination.split(', ');
+    const city = destinationArr[0].trim();
+    const country = destinationArr[1].trim();
+    let tripId: number|null = null;
+
 
     try {
-        await db.insert(trips).values({
+        const [newTrip] = await db.insert(trips).values({
             userId: userId,
+            country: country,
+            city: city,
             fromDate: fromDate,
-            toDate: toDate
-        });
+            toDate: toDate,
+            budget: budget,
+            selectedActivities: activities
+        }).returning({ id: trips.id });
 
-        revalidatePath('/app');
+        if (!newTrip || !newTrip.id) {
+            throw new Error('Failed to retrieve new trip ID after insertion.');
+        }
 
-        return { message: 'Trip added successfully!' };
+        tripId = newTrip.id;
+
+        await sendMessage({
+            QueueUrl: process.env.AWS_TRIP_QUEUE_URL!,
+            MessageBody: JSON.stringify({ tripId: tripId })
+        })
+
+        revalidatePath('/travel-planner');
+        revalidatePath(`/travel-planner/${tripId}`);
+
     } catch (error) {
         console.error("Database error adding trip:", error);
 
         return { message: "Failed to add trip due to server error.", errors: {'general': ["Server Error"]} };
     } 
+
+    redirect(`/travel-planner/${tripId}`);
 }
 
 

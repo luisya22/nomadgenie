@@ -1,3 +1,5 @@
+"use client"
+
 import { Plus, Send } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";

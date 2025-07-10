@@ -1,6 +1,6 @@
 {
-  "id": "29a1fcc1-ba02-4003-ad1b-ed67010aca93",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "4d75a8d2-2ac9-4c66-8a7a-7f1206b7bd51",
+  "prevId": "29a1fcc1-ba02-4003-ad1b-ed67010aca93",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -56,6 +56,13 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'[]'::jsonb"
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'PROCESSING'"
         },
         "created_at": {
           "name": "created_at",

@@ -1,0 +1,58 @@
+
+interface City {
+    name: string;
+    country: string;
+    description: string;
+}
+
+export const cities: City[] = [
+  { "name": "Paris", "country": "France", "description": "Eiffel Tower, Louvre, romance" },
+  { "name": "London", "country": "United Kingdom", "description": "Big Ben, British Museum, royal heritage" },
+  { "name": "New York City", "country": "United States", "description": "Times Square, Central Park, Broadway" },
+  { "name": "Tokyo", "country": "Japan", "description": "Shibuya, temples, pop culture" },
+  { "name": "Bangkok", "country": "Thailand", "description": "Grand Palace, street food, nightlife" },
+  { "name": "Dubai", "country": "United Arab Emirates", "description": "Burj Khalifa, luxury shopping, desert tours" },
+  { "name": "Singapore", "country": "Singapore", "description": "Marina Bay Sands, cleanliness, multicultural vibe" },
+  { "name": "Rome", "country": "Italy", "description": "Colosseum, Vatican City, ancient ruins" },
+  { "name": "Barcelona", "country": "Spain", "description": "Sagrada Familia, beaches, Gaudí" },
+  { "name": "Istanbul", "country": "Turkey", "description": "Hagia Sophia, bazaars, East meets West" },
+  { "name": "Hong Kong", "country": "China", "description": "Skyscrapers, Victoria Peak, dim sum" },
+  { "name": "Seoul", "country": "South Korea", "description": "K-culture, palaces, shopping" },
+  { "name": "Los Angeles", "country": "United States", "description": "Hollywood, beaches, entertainment" },
+  { "name": "Las Vegas", "country": "United States", "description": "Casinos, shows, nightlife" },
+  { "name": "Amsterdam", "country": "Netherlands", "description": "Canals, cycling, museums" },
+  { "name": "Vienna", "country": "Austria", "description": "Classical music, imperial palaces" },
+  { "name": "Berlin", "country": "Germany", "description": "History, nightlife, street art" },
+  { "name": "Prague", "country": "Czech Republic", "description": "Castles, old town, beer" },
+  { "name": "Milan", "country": "Italy", "description": "Fashion, Duomo, art" },
+  { "name": "Florence", "country": "Italy", "description": "Renaissance art, architecture, Tuscany" },
+  { "name": "Madrid", "country": "Spain", "description": "Royal Palace, museums, tapas" },
+  { "name": "Lisbon", "country": "Portugal", "description": "Trams, viewpoints, old town charm" },
+  { "name": "Cairo", "country": "Egypt", "description": "Pyramids, ancient history, Nile" },
+  { "name": "Marrakech", "country": "Morocco", "description": "Souks, desert tours, architecture" },
+  { "name": "Rio de Janeiro", "country": "Brazil", "description": "Christ the Redeemer, beaches, Carnival" },
+  { "name": "Buenos Aires", "country": "Argentina", "description": "Tango, culture, architecture" },
+  { "name": "Cape Town", "country": "South Africa", "description": "Table Mountain, coastlines, wine" },
+  { "name": "Mexico City", "country": "Mexico", "description": "History, museums, food" },
+  { "name": "San Francisco", "country": "United States", "description": "Golden Gate, Alcatraz, tech culture" },
+  { "name": "Chicago", "country": "United States", "description": "Architecture, lakefront, museums" },
+  { "name": "San Diego", "country": "United States", "description": "Beaches, zoo, laid-back vibe" },
+  { "name": "Miami", "country": "United States", "description": "Beaches, nightlife, Latin culture" },
+  { "name": "Toronto", "country": "Canada", "description": "CN Tower, multiculturalism, festivals" },
+  { "name": "Vancouver", "country": "Canada", "description": "Nature, mountains, ocean city" },
+  { "name": "Sydney", "country": "Australia", "description": "Opera House, beaches, harbor" },
+  { "name": "Melbourne", "country": "Australia", "description": "Art, coffee culture, laneways" },
+  { "name": "Auckland", "country": "New Zealand", "description": "Nature, Maori culture, harbors" },
+  { "name": "Jerusalem", "country": "Israel", "description": "Holy sites, history, spirituality" },
+  { "name": "Amman", "country": "Jordan", "description": "Gateway to Petra, culture, Middle Eastern food" },
+  { "name": "Doha", "country": "Qatar", "description": "Modern city, museums, desert meets luxury" },
+  { "name": "Athens", "country": "Greece", "description": "Acropolis, mythology, Mediterranean vibe" },
+  { "name": "Edinburgh", "country": "United Kingdom", "description": "Castles, old town, festivals" },
+  { "name": "Hanoi", "country": "Vietnam", "description": "Old Quarter, street food, culture" },
+  { "name": "Ho Chi Minh City", "country": "Vietnam", "description": "Markets, war history, nightlife" },
+  { "name": "Kuala Lumpur", "country": "Malaysia", "description": "Petronas Towers, food, culture" },
+  { "name": "Osaka", "country": "Japan", "description": "Street food, theme parks, culture" },
+  { "name": "Kyoto", "country": "Japan", "description": "Temples, traditions, gardens" },
+  { "name": "Lima", "country": "Peru", "description": "Gastronomy, colonial architecture, Pacific coast" },
+  { "name": "Cusco", "country": "Peru", "description": "Gateway to Machu Picchu, Andean culture" }
+];

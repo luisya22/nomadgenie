@@ -1,3 +1,5 @@
+"use client"
+
 import { Calendar, Clock, Edit3, Heart, MapPin, Plus, Star } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
