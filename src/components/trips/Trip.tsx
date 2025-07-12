@@ -14,8 +14,6 @@ export default function TripComponent({ tripId }: TripProps) {
     const [trip, setTrip] = useState<TripWithDetails | null>(null);
 
     useEffect(() => {
-        let intervalId: NodeJS.Timeout|undefined;
-
         const pollStatus = async () => {
             try {
                 const dbTrip = await getTripById(tripId);
@@ -32,7 +30,7 @@ export default function TripComponent({ tripId }: TripProps) {
             }
         }
 
-        intervalId = setInterval(pollStatus, 3000);
+        const intervalId = setInterval(pollStatus, 3000);
 
         return () => {
             clearInterval(intervalId);
