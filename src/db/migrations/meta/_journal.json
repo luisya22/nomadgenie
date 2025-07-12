@@ -15,6 +15,13 @@
       "when": 1752286076875,
       "tag": "0001_premium_killmonger",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752335990213,
+      "tag": "0002_sudden_swarm",
+      "breakpoints": true
     }
   ]
 }

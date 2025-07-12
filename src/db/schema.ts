@@ -62,7 +62,7 @@ export const itineraryDetails = pgTable("itinerary_details", {
 
 export const itineraryDetailsRelations = relations(itineraryDetails, ({ one }) => ({
     itinerary: one(itineraries, {
-        fields: [itineraryDetails.id],
+        fields: [itineraryDetails.itineraryId],
         references: [itineraries.id]
     }),
 }));

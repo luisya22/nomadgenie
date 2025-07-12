@@ -22,10 +22,23 @@ export async function getTrips() {
 }
 
 export async function getTripById(id: number) {
-    const [trip] = await db.select().from(trips).where(eq(trips.id, id));
+    const trip = await db.query.trips.findFirst({
+        where: eq(trips.id, id),
+        with: {
+            itineraries: {
+                with: {
+                    details: true
+                }
+            }
+        }
+    });
+
+    console.log("This is the trip", trip, typeof trip);
 
     return trip;
 }
+
+export type TripWithDetails = Awaited<ReturnType<typeof getTripById>>;
 
 export async function addTrip(prevState: ActionState, formData: FormData): Promise<ActionState> {
     const {userId} = await auth();

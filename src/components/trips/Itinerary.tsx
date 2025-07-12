@@ -6,67 +6,28 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import Image from "next/image"
 import { Badge } from "../ui/badge";
-import { type Trip } from "@/db/schema";
+import { Skeleton } from "../ui/skeleton";
+import { TripWithDetails } from "@/actions/tripActions";
 
-
-interface Attraction {
-  id: string
-  name: string
-  rating: number
-  reviews: string
-  description: string
-  image: string
-  category: string
-  time?: string
-}
 
 interface ItineraryProps{
-    trip: Trip
+    trip: TripWithDetails|null
 }
 
 export default function Itinerary({trip}: ItineraryProps){
 
     const [selectedDates, setSelectedDates] = useState(["Feb 10"]);
-    const [] = useState();
+    const [] = useState(); 
 
-    const attractions: Attraction[] = [
-        {
-            id: "1",
-            name: "Brunch & Cake",
-            rating: 4.3,
-            reviews: "8.6k reviews",
-            description: "Instagram-worthy brunch spot with creative dishes and beautiful presentation",
-            image: "/images/restaurante.jpg",
-            category: "Restaurant",
-            time: "9:00 AM",
-        },
-        {
-            id: "2",
-            name: "Sagrada Familia",
-            rating: 4.8,
-            reviews: "292k reviews",
-            description: "Gaudí's masterpiece basilica with breathtaking architecture and tower views",
-            image: "/images/sagradafamilia.webp",
-            category: "Attraction",
-            time: "11:30 AM",
-        },
-        {
-            id: "3",
-            name: "Park Güell",
-            rating: 4.6,
-            reviews: "156k reviews",
-            description: "Whimsical park with colorful mosaics and panoramic city views",
-            image: "/images/parc-guell.jpg",
-            category: "Attraction",
-            time: "2:00 PM",
-        },
-    ]
+    console.log(trip)
 
 
     return (
         <div>
             <Card className="overflow-hidden border-0 shadow-xl bg-white pt-0">
-                <div className="relative h-72">
+               {trip ? (
+                <> 
+                    <div className="relative h-72">
                     <Image
                         src={'/images/europe.jpg'}
                         alt={'travel'}
@@ -97,28 +58,37 @@ export default function Itinerary({trip}: ItineraryProps){
                             { trip?.city } is a captivating destination in { trip?.country }, renowned for its vibrant culture and stunning landmarks. With a rich tapestry of historical charm and a dynamic atmosphere, it offers visitors a delightful blend of exploration, relaxation, and unique experiences.
                         </p>
                         <div className="flex gap-2 flex-wrap">
-                            {["Feb 10", "Feb 11", "Feb 12", "Feb 13"].map((date) => (
-                                <Button
-                                    key={date}
-                                    size="sm"
-                                    variant={selectedDates.includes(date) ? "default" : "outline"}
-                                    onClick={() => {
-                                        if (selectedDates.includes(date)) {
-                                            setSelectedDates(selectedDates.filter((d) => d !== date))
-                                        } else {
-                                            setSelectedDates([...selectedDates, date]);
-                                        }
-                                    }}
-                                    className={
-                                        `cursor-pointer ${selectedDates.includes(date)
+                            {trip.itineraries.map((itinerary) => {
+
+                                        const date = new Date(itinerary.date);
+                                        const formattedDate = date.toLocaleDateString('en-US', {
+                                            month: 'short',
+                                            day: 'numeric'
+                                        })
+
+                                return (
+                                            <Button
+                                                key={formattedDate}
+                                                size="sm"
+                                                variant={selectedDates.includes(formattedDate) ? "default" : "outline"}
+                                                onClick={() => {
+                                                    if (selectedDates.includes(formattedDate)) {
+                                                        setSelectedDates(selectedDates.filter((d) => d !== formattedDate))
+                                                    } else {
+                                                        setSelectedDates([...selectedDates, formattedDate]);
+                                                    }
+                                                }}
+                                                className={
+                                                    `cursor-pointer ${selectedDates.includes(formattedDate)
 ? "bg-yellow-200 hover:bg-amber-400 text-amber-800"
 : "border-gray-300 hover:bg-gray-50"
 }`
-                                    }
-                                >
-                                    {date} 
-                                </Button>
-                            ))}
+                                                }
+                                            >
+                                                {formattedDate} 
+                                            </Button>
+                                )
+                                    })}
                         </div>
                     </div>
 
@@ -136,57 +106,74 @@ export default function Itinerary({trip}: ItineraryProps){
                             </Button>
                         </div>
 
-                        <div className="space-y-4">
-                            {attractions.map((attraction, index) => (
-                                <div
-                                    key={attraction.id}
-                                    className="group relative overflow-hidden roundedx-xl bg-gray-50 p-5 hover:shadow-lg transition-all duration-300 border border-gray-200"
-                                >
-                                    <div className="flex items-center justify-center gap-4">
-                                        <div className="flex flex-col items-center justify-center flex-shrink-0">
-                                            <div className="w-8 h-8 bg-amber-200 rounded-full flex items-center justify-center text-amber-800 font-bold text-sm mb-2">
-                                                {index + 1}
+                        <div className="space-y-20">
+                            {trip.itineraries.map((itinerary) => {
+                                        const date = new Date(itinerary.date);
+                                        const formattedDate = date.toLocaleDateString('en-US', {
+                                            month: 'short',
+                                            day: 'numeric'
+                                        })
+                                        return (
+                                            <div className="space-y-4" key={itinerary.id}>     
+                                                <h2 className="text-xl font-semibold">{formattedDate}</h2>
+                                                {
+                                                    itinerary.details.map((detail, detailIndex) => (
+                                                        <div
+                                                            key={detail.id}
+                                                            className="group relative overflow-hidden roundedx-xl bg-gray-50 p-5 hover:shadow-lg transition-all duration-300 border border-gray-200"
+                                                        >
+                                                            <div className="flex items-center justify-center gap-4">
+                                                                <div className="flex flex-col items-center justify-center flex-shrink-0">
+                                                                    <div className="w-8 h-8 bg-amber-200 rounded-full flex items-center justify-center text-amber-800 font-bold text-sm mb-2">
+                                                                        {detailIndex + 1}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="w-20 h-20 rounded-xl overflow-hidden">
+                                                                    {/* TODO: ADD IMAGE TO ITINERARY DETAILS */}
+                                                                    <img
+                                                                        src={"/placeholder.svg"}
+                                                                        alt={detail.place}
+                                                                        className="w-full h-full object-cover"
+                                                                    />
+                                                                </div>
+                                                                <div className="flex-1 min-w-0">
+                                                                    <div className="flex items-center gap-2 mb-2">
+                                                                        <h4 className="font-bold text-lg text-gray-800">{detail.place}</h4>
+                                                                        <Button
+                                                                            size="sm"
+                                                                            variant="ghost"
+                                                                            className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                                        >
+                                                                            <Edit3 className="w-4 h-4"/>
+                                                                        </Button>
+                                                                    </div>
+                                                                    <div className="flex items-center gap-2 mb-2">
+                                                                        <div className="flex items-center gap-1">
+                                                                            <Star className="w-4 h-4 fill-amber-400 text-amber-400"/>
+                                                                            {/* TODO: ADD IMAGE TO ITINERARY DETAILS */}
+                                                                            <span className="font-semibold">4.3</span>
+                                                                        </div>
+                                                                        <span className="text-sm text-gray-500">(8.6k reviews)</span>
+                                                                        {detail.time && (
+                                                                            <>
+                                                                                <span className="text-gray-400">•</span>
+                                                                                <Badge className="bg-amber-200 text-amber-800 hover:bg-amber-400 flex items-center gap-1">
+                                                                                    <Clock className="w-3 h-3"/>
+                                                                                    {detail.time}
+                                                                                </Badge>
+                                                                            </>
+                                                                        )}
+                                                                    </div>
+                                                                    <p className="text-sm text-gray-600 line-clamp-2">{detail.description}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                }
                                             </div>
-                                        </div>
-                                        <div className="w-20 h-20 rounded-xl overflow-hidden">
-                                            <img
-                                                src={attraction.image || "/placeholder.svg"}
-                                                alt={attraction.name}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <h4 className="font-bold text-lg text-gray-800">{attraction.name}</h4>
-                                                <Button
-                                                    size="sm"
-                                                    variant="ghost"
-                                                    className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                                                >
-                                                    <Edit3 className="w-4 h-4"/>
-                                                </Button>
-                                            </div>
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <div className="flex items-center gap-1">
-                                                    <Star className="w-4 h-4 fill-amber-400 text-amber-400"/>
-                                                    <span className="font-semibold">{attraction.rating}</span>
-                                                </div>
-                                                <span className="text-sm text-gray-500">({attraction.reviews})</span>
-                                                {attraction.time && (
-                                                    <>
-                                                        <span className="text-gray-400">•</span>
-                                                        <Badge className="bg-amber-200 text-amber-800 hover:bg-amber-400 flex items-center gap-1">
-                                                            <Clock className="w-3 h-3"/>
-                                                            {attraction.time}
-                                                        </Badge>
-                                                    </>
-                                                )}
-                                            </div>
-                                            <p className="text-sm text-gray-600 line-clamp-2">{attraction.description}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                                        ) 
+
+                            })}
 
                             <div className="flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-xl hover:border-amber-200 hover:bg-gray-50 transition-colors cursor-pointer group">
                                 <div className="text-center">
@@ -200,6 +187,20 @@ export default function Itinerary({trip}: ItineraryProps){
                         </div>
                     </div>
                 </CardContent>
+                </>
+               ) : (
+                <>
+                  <div className="p-10">
+                    <h1 className="text-2xl font-bold">We are generating your adventure...</h1>
+                    <p>This may take few seconds</p>
+                  </div>
+                  <Skeleton className="rounded-xl h-72"/>
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full"/>
+                    <Skeleton className="h-4 w-full"/>
+                  </div>
+                </>
+               )} 
             </Card>
         </div>
     );
