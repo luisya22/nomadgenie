@@ -10,6 +10,7 @@ import (
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
+// TODO on fail set status to Failed
 func main() {
 	db, err := sql.Open("pgx", os.Getenv("DATABASE_URL"))
 	defer db.Close()

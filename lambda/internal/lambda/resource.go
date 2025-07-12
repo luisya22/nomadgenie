@@ -82,7 +82,8 @@ func saveSuggestions(ctx context.Context, db *sql.DB, tripID int, itineraries []
 		for _, d := range i.Details {
 			_, err := tx.ExecContext(
 				ctx,
-				"INSERT INTO itinerary_details (type, name, place, description, time, aprox_time) values ($1, $2, $3, $4, $5, $6)",
+				"INSERT INTO itinerary_details (itinerary_id, type, name, place, description, time, aprox_time) values ($1, $2, $3, $4, $5, $6, $7)",
+				i.ID,
 				d.Type,
 				d.Name,
 				d.Place,
