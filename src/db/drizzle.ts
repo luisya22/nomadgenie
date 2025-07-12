@@ -8,8 +8,8 @@ config({ path: ".env" });
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL!,
     max: 20,
-    idleTimeoutMilis: 30000,
-    ConnectionTimeoutMilis: 5000,
+    idleTimeoutMillis: 30000,
+    connectionTimeoutMillis: 5000,
 })
 
 export const db = drizzle(pool, { schema });
