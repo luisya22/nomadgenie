@@ -9,7 +9,6 @@ import Videos from "./Videos";
 import Events from "./Events";
 import Dining from "./Dining";
 import Activities from "./Activities";
-import { Trip } from "@/db/schema";
 import { Skeleton } from "../ui/skeleton";
 import { TripWithDetails } from "@/actions/tripActions";
 
