@@ -1,10 +1,8 @@
 "use client"
 
-import usePolling from "@/hooks/usePolling";
 import Itinerary from "./Itinerary";
 import TripBuilder from "./TripBuilderPages";
-import { Trip } from "@/db/schema";
-import { useState, useRef, useEffect } from "react"; // Import useRef
+import { useState, useEffect } from "react"; // Import useRef
 import { getTripById, TripWithDetails } from "@/actions/tripActions";
 
 interface TripProps {
