@@ -51,7 +51,7 @@ export type NewItinerary = typeof itineraries.$inferInsert;
 // ITINERARY_DETAILS
 export const itineraryDetails = pgTable("itinerary_details", {
     id: serial("id").primaryKey(),
-    itineraryId: integer('itinerary_id').references(() => trips.id, {onDelete: 'cascade'}),
+    itineraryId: integer('itinerary_id').references(() => itineraries.id, {onDelete: 'cascade'}).notNull(),
     type: varchar('type').notNull(),
     name: varchar('name').notNull(),
     place: varchar('place').notNull(),
