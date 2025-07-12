@@ -1,1 +1,0 @@
-ALTER TABLE "trips" ADD COLUMN "status" varchar DEFAULT 'PROCESSING' NOT NULL;

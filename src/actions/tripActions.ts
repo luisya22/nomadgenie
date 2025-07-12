@@ -44,6 +44,8 @@ export async function addTrip(prevState: ActionState, formData: FormData): Promi
         travelGroup: formData.get('travelGroup')
     };
 
+    console.log("Data", rawData)
+
 
     const validationResult = tripFormSchema.safeParse(rawData);
 

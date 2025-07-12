@@ -69,6 +69,8 @@ export default function TripForm(){
         } : undefined,
     });
 
+    console.log("here");
+
     const { pending } = useFormStatus(); 
 
     const onSubmit = async (data: TripFormValues) => {
@@ -87,7 +89,9 @@ export default function TripForm(){
             formData.append("activities", activity);
         });
 
+        console.log('submitting');
         const result = await addTrip(formState, formData);
+        console.log("result", result);
 
         if (result?.errors) {
             for (const [fieldName, errorMessages] of Object.entries(result.errors)) {
