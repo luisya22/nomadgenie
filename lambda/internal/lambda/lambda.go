@@ -15,6 +15,12 @@ type LambdaHandler struct {
 }
 
 func (h *LambdaHandler) Handler(ctx context.Context, sqsEvent events.SQSEvent) error {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Printf("PANIC RECOVERED: %v", r)
+		}
+	}()
+
 	for _, record := range sqsEvent.Records {
 		var payload struct {
 			TripID int `json:"tripId"`
@@ -26,7 +32,7 @@ func (h *LambdaHandler) Handler(ctx context.Context, sqsEvent events.SQSEvent) e
 		}
 
 		if err := processTrip(ctx, h.DB, payload.TripID, h.LlmAPiKey); err != nil {
-			log.Printf("%v", err)
+			log.Println(err.Error())
 			continue
 		}
 	}

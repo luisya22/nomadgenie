@@ -18,9 +18,14 @@ func main() {
 		log.Fatalf("Failed to connect to DB: %v", err)
 	}
 
+	llmAPIKey := os.Getenv("LLM_API_KEY")
+	if llmAPIKey == "" {
+		log.Fatalf("LLM_API_KEY environment variable is not set.")
+	}
+
 	handler := nomadlambda.LambdaHandler{
 		DB:        db,
-		LlmAPiKey: os.Getenv("LLM_API_KEY"),
+		LlmAPiKey: llmAPIKey,
 	}
 
 	lambda.Start(handler.Handler)

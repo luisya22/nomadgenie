@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 )
 
 func processTrip(ctx context.Context, db *sql.DB, tripId int, apiKey string) error {
@@ -13,19 +14,27 @@ func processTrip(ctx context.Context, db *sql.DB, tripId int, apiKey string) err
 		return fmt.Errorf("Error getting trip: %w", err)
 	}
 
+	log.Printf("Calling OPENAI")
+
 	itinerariesStr, err := callOpenAI(ctx, trip, apiKey)
 	if err != nil {
 		return fmt.Errorf("OpenAI error: %w", err)
 	}
+
+	log.Printf("Parsing Itineraries")
 
 	itineraries, err := parseItineraries(itinerariesStr)
 	if err != nil {
 		return fmt.Errorf("JSON parsing error: %w, %v", err, itinerariesStr)
 	}
 
+	log.Printf("Saving Suggestions")
+
 	if err := saveSuggestions(ctx, db, tripId, itineraries); err != nil {
 		return fmt.Errorf("Failed saving itinerary: %w", err)
 	}
+
+	log.Printf("Changing Trip Status")
 
 	err = changeTripStatus(ctx, db, trip.ID)
 	if err != nil {

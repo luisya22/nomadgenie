@@ -22,5 +22,5 @@ func main() {
 		LlmApiKey: os.Getenv("LLM_API_KEY"),
 	}
 
-	handler.Handler(context.Background(), 1)
+	handler.Handler(context.Background(), 2)
 }
