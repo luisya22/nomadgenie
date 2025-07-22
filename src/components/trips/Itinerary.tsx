@@ -8,7 +8,6 @@ import Image from "next/image"
 import { Badge } from "../ui/badge";
 import { Skeleton } from "../ui/skeleton";
 import { TripWithDetails } from "@/actions/tripActions";
-import { Input } from "../ui/input";
 import ActivityEditPopOver from "./ActivityEditPopOver";
 
 
