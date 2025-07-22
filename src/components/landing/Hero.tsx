@@ -1,8 +1,6 @@
 "use client"
 
-import { Sparkles, Brain, Zap, MessageCircle, Globe } from "lucide-react"
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Zap, MessageCircle, Globe } from "lucide-react"
 import { Badge } from "../ui/badge";
 
 export default function Hero() {
@@ -18,22 +16,7 @@ export default function Hero() {
                     Create personalized itineraries with AI, share with the community, and discover hidden gems through collaborative travel planning
                 </p>
 
-                {/* Search Bar */}
-                <div className="bg-white rounded-2xl p-3 max-w-3xl mx-auto shadow-2xl">
-                    <div className="flex items-center space-x-3">
-                        <div className="flex-1 flex items-center space-x-3 px-4">
-                            <Sparkles className="h-5 w-5 text-amber-400" />
-                            <Input
-                                placeholder="Tell me about your dream trip... (e.g., 'Romantic getaway in Europe for 7 days')"
-                                className="border-none shadow-none focus-visible:ring-0 text-gray-900 placeholder:text-gray-500 text-lg"
-                            />
-                        </div>
-                        <Button className="cursor-pointer bg-amber-200 hover:bg-amber-400 text-amber-800">
-                            <Brain className="h-5 w-5 mr-2" />
-                            Plan with AI
-                        </Button>
-                    </div>
-                </div> 
+                 
                 <div className="flex items-center justify-center space-x-8 mt-8 text-sm text-gray-300">
                     <Badge className="bg-amber-100 text-amber-700 flex items-center space-x-2">
                         <Zap className="h-4 w-4" />

@@ -8,6 +8,8 @@ import Image from "next/image"
 import { Badge } from "../ui/badge";
 import { Skeleton } from "../ui/skeleton";
 import { TripWithDetails } from "@/actions/tripActions";
+import { Input } from "../ui/input";
+import ActivityEditPopOver from "./ActivityEditPopOver";
 
 
 interface ItineraryProps{
@@ -20,6 +22,7 @@ export default function Itinerary({trip}: ItineraryProps){
     const [] = useState(); 
 
     console.log(trip)
+const imagePath = `/images/${trip?.city.toLowerCase().replaceAll(' ', '')}.jpeg`;
 
 
     return (
@@ -29,7 +32,7 @@ export default function Itinerary({trip}: ItineraryProps){
                 <> 
                     <div className="relative h-72">
                     <Image
-                        src={'/images/europe.jpg'}
+                        src={imagePath}
                         alt={'travel'}
                         fill
                     />
@@ -131,7 +134,7 @@ export default function Itinerary({trip}: ItineraryProps){
                                                                 <div className="w-20 h-20 rounded-xl overflow-hidden">
                                                                     {/* TODO: ADD IMAGE TO ITINERARY DETAILS */}
                                                                     <img
-                                                                        src={"/placeholder.svg"}
+                                                                        src={`/images/${detail.type}.jpeg`}
                                                                         alt={detail.place}
                                                                         className="w-full h-full object-cover"
                                                                     />
@@ -154,14 +157,16 @@ export default function Itinerary({trip}: ItineraryProps){
                                                                             <span className="font-semibold">4.3</span>
                                                                         </div>
                                                                         <span className="text-sm text-gray-500">(8.6k reviews)</span>
+                                                                        <span className="text-gray-400">•</span>
                                                                         {detail.time && (
-                                                                            <>
-                                                                                <span className="text-gray-400">•</span>
-                                                                                <Badge className="bg-amber-200 text-amber-800 hover:bg-amber-400 flex items-center gap-1">
-                                                                                    <Clock className="w-3 h-3"/>
-                                                                                    {detail.time}
-                                                                                </Badge>
-                                                                            </>
+                                                                            <ActivityEditPopOver details={detail}>
+                                                                                <div key={detail.id} className="cursor-pointer">
+                                                                                    <Badge className="bg-amber-200 text-amber-800 hover:bg-amber-400 flex items-center gap-1">
+                                                                                        <Clock className="w-3 h-3"/>
+                                                                                        {detail.time}
+                                                                                    </Badge>
+                                                                                </div>
+                                                                             </ActivityEditPopOver>
                                                                         )}
                                                                     </div>
                                                                     <p className="text-sm text-gray-600 line-clamp-2">{detail.description}</p>

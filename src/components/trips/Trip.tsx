@@ -16,25 +16,23 @@ export default function TripComponent({ tripId }: TripProps) {
     useEffect(() => {
         const pollStatus = async () => {
             try {
+                
                 const dbTrip = await getTripById(tripId);
 
                 console.log(dbTrip?.status);
 
                 if (dbTrip?.status === 'GENERATED') {
-                    clearInterval(intervalId);
                     setTrip(dbTrip);
+                    return;
                 }
+
+                setTimeout(pollStatus, 3000)
             } catch(error) {
                 console.error("Error polling status:", error);
-                clearInterval(intervalId);
             }
         }
 
-        const intervalId = setInterval(pollStatus, 3000);
-
-        return () => {
-            clearInterval(intervalId);
-        }
+        pollStatus() 
 
     }, [tripId]);
 

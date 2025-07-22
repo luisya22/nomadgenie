@@ -30,10 +30,10 @@ export default function TravelApp() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300"
           style={{
-            backgroundImage: `url('/images/main-landing.jpg?height=1080&width=1920')`,
+            backgroundImage: `url('/images/main-landing.jpeg?height=1080&width=1920')`,
           }}
         >
-          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
 
         {/* Navigation Bar */}
