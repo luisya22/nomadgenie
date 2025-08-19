@@ -65,7 +65,7 @@ export default function TripBuilder({trip}: TripBuilderProps){
                                 </TabsTrigger>
                             </TabsList>
                             <TabsContent value="chat">
-                                <Chat/> 
+                                <Chat trip={trip}/> 
                             </TabsContent>
                             <TabsContent value="videos" className="mt-6">
                                 <Videos/>

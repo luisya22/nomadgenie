@@ -21,7 +21,7 @@ export default function Itinerary({trip}: ItineraryProps){
     const [] = useState(); 
 
     console.log(trip)
-const imagePath = `/images/${trip?.city.toLowerCase().replaceAll(' ', '')}.jpeg`;
+    const imagePath = `/images/${trip?.city.toLowerCase().replaceAll(' ', '')}.jpeg`;
 
 
     return (

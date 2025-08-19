@@ -22,6 +22,13 @@
       "when": 1752335990213,
       "tag": "0002_sudden_swarm",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1755573017438,
+      "tag": "0003_dusty_nighthawk",
+      "breakpoints": true
     }
   ]
 }

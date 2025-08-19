@@ -6,8 +6,13 @@ import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { TripWithDetails } from "@/actions/tripActions";
 
-export default function Chat(){
+interface ChatProps {
+    trip: TripWithDetails|null
+}
+
+export default function Chat({trip}: ChatProps){
 
     const [chatMessage, setChatMessage] = useState("")
 
@@ -16,7 +21,7 @@ export default function Chat(){
             <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-2 text-gray-800">What do you have in mind?</h2>
                 <p className="text-gray-600">
-                    {`I'm here to help you build the perfect Barcelona itinerary. Ask me anything!`}
+                    {`I'm here to help you build the perfect ${trip?.city} itinerary. Ask me anything!`}
                 </p>
             </div>
             <ScrollArea className="flex-1 mb-6">
@@ -27,7 +32,7 @@ export default function Chat(){
                         </Avatar>
                         <div className="bg-blue-50 border border-blue-100 rounded-2xl rounded-tl-sm p-4 max-w-[80%]">
                             <p className="text-gray-800">
-                                {`¡Hola! I'm your Barcelona travel genie. I can help you discover hidden gems, plan your
+                                {`¡Hola! I'm your ${trip?.city} travel genie. I can help you discover hidden gems, plan your
 itinerary, find amazing restaurants, and create unforgettable experiences. What would you
 like to add to your trip?`}
                             </p>
@@ -36,7 +41,7 @@ like to add to your trip?`}
                     <div className="flex gap-3 justify-end">
                         <div className="bg-gray-800 text-white rounded-2xl rounded-tr-sm p-4 max-w-[80%] shadow-md">
                             <p>
-                                I want to experience authentic Barcelona like a local. What should I add to my itinerary?
+                                I want to experience authentic {trip?.city} like a local. What should I add to my itinerary?
                             </p>
                         </div>
                         <Avatar className="w-10 h-10">

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { date, pgTable, varchar, serial, timestamp, jsonb, integer } from "drizzle-orm/pg-core";
+import { date, pgTable, varchar, serial, timestamp, jsonb, integer, text } from "drizzle-orm/pg-core";
 
 //TODO: Change selectedActivities to selected_activities
 
@@ -71,3 +71,18 @@ export type ItineraryDetails = typeof itineraryDetails.$inferSelect;
 export type NewItineraryDetails = typeof itineraryDetails.$inferInsert;
 
 
+
+export const tripChatMessages = pgTable("trip_chat_messages", {
+    id: serial("id").primaryKey(),
+    tripId: integer('trip_id').references(() => trips.id, {onDelete: 'cascade'}).notNull(),
+    role: varchar("role").notNull(), 
+    content: text("content").notNull(),
+    status:  varchar("status").notNull().default("completed")
+});
+
+export const tripChatMessagesRelations = relations(tripChatMessages, ({ one }) => ({
+    trip: one(trips, {
+        fields: [tripChatMessages.tripId],
+        references: [trips.id]
+    })
+}));
