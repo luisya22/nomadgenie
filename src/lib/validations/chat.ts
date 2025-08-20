@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { tripFormSchema } from './trip';
 
 export const chatFormSchema = z.object({
     message: z.string().min(1, { message: "message is required"}),
