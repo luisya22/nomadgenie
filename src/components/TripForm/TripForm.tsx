@@ -95,6 +95,7 @@ export default function TripForm(){
 
         if (result?.errors) {
             for (const [fieldName, errorMessages] of Object.entries(result.errors)) {
+
                 if (fieldName !== '_form') {
                     form.setError(fieldName as keyof TripFormValues, {
                         type: 'server',

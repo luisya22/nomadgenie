@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 import { sendMessage } from "@/lib/sqs";
 import { eq } from "drizzle-orm";
 
-interface ActionState {
+export interface ActionState {
     message: string;
     errors?: {
         [key: string]: string[];

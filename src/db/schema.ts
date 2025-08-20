@@ -86,3 +86,6 @@ export const tripChatMessagesRelations = relations(tripChatMessages, ({ one }) =
         references: [trips.id]
     })
 }));
+
+export type TripChatMessage = typeof tripChatMessages.$inferSelect;
+export type NewTripChatMessage = typeof tripChatMessages.$inferInsert;

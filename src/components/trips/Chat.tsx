@@ -7,6 +7,9 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { TripWithDetails } from "@/actions/tripActions";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { addMessage, getTripMessages } from "@/actions/chatActions";
+import { TripChatMessage } from "@/db/schema";
 
 interface ChatProps {
     trip: TripWithDetails|null
@@ -14,7 +17,48 @@ interface ChatProps {
 
 export default function Chat({trip}: ChatProps){
 
-    const [chatMessage, setChatMessage] = useState("")
+    const [message, setMessage] = useState("")
+    const queryClient = useQueryClient();
+
+    const { data } = useQuery({
+        queryKey: ["tripMessages", trip?.id],
+        queryFn: () => getTripMessages(trip?.id),
+        enabled: !!trip?.id,
+    });
+
+    const sendMessage = useMutation({
+        mutationFn: async (formData: FormData) => {
+            console.log("Hello there!");
+            return addMessage(formData);
+        },
+        onSuccess: (result) => {
+            if (result.data) {
+                queryClient.invalidateQueries({ queryKey: ["tripMessages", trip?.id] });
+            } else if (result.errors) {
+                // TODO: Handle errors
+                console.error(result.errors);
+            }
+        },
+        onError: () => {
+            // TODO Handle errors
+        }
+    });
+
+    const handleSend = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!trip?.id) return;
+        if (!message.trim()) return;
+
+        const formData = new FormData();
+        formData.set("message", message);
+        formData.set("tripId", String(trip.id));
+
+        sendMessage.mutate(formData, {
+            onSuccess: (result) => {
+                if (result.data) setMessage("");
+            }
+        })
+    }
 
     return (
         <div className="p-6 flex flex-col">
@@ -77,19 +121,65 @@ like to add to your trip?`}
                             </div>
                         </div>
                     </div>
+                    { data?.map(message => {
+                        if(message.role == 'user') return <UserMessage message={message} key={message.id}/>
+
+                        return <AssitantMessage message={message} key={message.id}/>
+                    })}
                 </div>
             </ScrollArea>
-            <div className="flex gap-3">
-                <Input
-                    placeholder="Ask me to suggest something for your itinerary..."
-                    value={chatMessage}
-                    onChange={(e) => setChatMessage(e.target.value)}
-                    className="flex-1 border-gray-300 focus:border-blue-500 rounded-xl"
-                />
-                <Button className="bg-amber-200 hover:bg-amber-300 text-amber-800 rounded-xl px-6">
-                    <Send className="w-4 h-4" />
-                </Button>
-            </div>
+            <form onSubmit={handleSend}>
+                <div className="flex gap-3">
+                    <Input
+                        placeholder="Ask me to suggest something for your itinerary..."
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        className="flex-1 border-gray-300 focus:border-blue-500 rounded-xl"
+                    />
+                    <Button className="bg-amber-200 hover:bg-amber-300 text-amber-800 rounded-xl px-6" disabled={sendMessage.isPending} type="submit">
+                        <Send className="w-4 h-4" />
+                    </Button>
+                </div>
+            </form>
         </div>
     )
+}
+
+interface UserMessageProps {
+    message: TripChatMessage
+}
+
+function UserMessage({message}: UserMessageProps){
+    return (
+        <div className="flex gap-3 justify-end">
+            <div className="bg-gray-800 text-white rounded-2xl rounded-tr-sm p-4 max-w-[80%] shadow-md">
+                <p>
+                    {message.content}
+                </p>
+            </div>
+            <Avatar className="w-10 h-10">
+                <AvatarFallback className="bg-gray-300 text-gray-700">You</AvatarFallback>
+            </Avatar>
+        </div>
+
+    );
+}
+
+interface AssitanteMessageProps {
+    message: TripChatMessage
+}
+
+function AssitantMessage({message}: AssitanteMessageProps) {
+    return (
+        <div className="flex gap-3">
+            <Avatar>
+                <AvatarFallback className="bg-amber-200 text-amber-800 font-bold">NG</AvatarFallback>
+            </Avatar>
+            <div className="bg-blue-50 border border-blue-100 rounded-2xl rounded-tl-sm p-4 max-w-[80%]">
+                <p className="text-gray-800">
+                    {message.content}
+                </p>
+            </div>
+        </div>
+    );
 }
