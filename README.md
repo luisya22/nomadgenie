@@ -30,10 +30,13 @@ NomadGenie is built using modern web technologies:
 - **Next.js 14 (App Router)**: For a fast, scalable, and efficient application.
 - **React**: Powers the interactive and dynamic user interface.
 - **Tailwind CSS**: For streamlined and responsive styling.
-- **Shadcn/ui**: Provides beautifully crafted and accessible UI components.
+- **Shadcn/ui**: Provides 
+beautifully crafted and accessible UI components.
 - **Lucide React**: For crisp and clear icons throughout the application.
 
 ---
 ### ▶️ See NomadGenie in Action!
 Check out a live demo of the project here:
 [Nomad Genie Demo](https://nomadgenie.vercel.app)
+
+![ezgif-58e07f5d741814](https://github.com/user-attachments/assets/c444779a-ed1d-49bc-9477-0029da275f66)
