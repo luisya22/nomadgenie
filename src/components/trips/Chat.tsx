@@ -82,45 +82,6 @@ like to add to your trip?`}
                             </p>
                         </div>
                     </div>
-                    <div className="flex gap-3 justify-end">
-                        <div className="bg-gray-800 text-white rounded-2xl rounded-tr-sm p-4 max-w-[80%] shadow-md">
-                            <p>
-                                I want to experience authentic {trip?.city} like a local. What should I add to my itinerary?
-                            </p>
-                        </div>
-                        <Avatar className="w-10 h-10">
-                            <AvatarFallback className="bg-gray-300 text-gray-700">You</AvatarFallback>
-                        </Avatar>
-                    </div>
-                    <div className="flex gap-3">
-                        <Avatar className="w-10 h-10">
-                            <AvatarFallback className="bg-amber-200 text-amber-800 font-bold">NG</AvatarFallback>
-                        </Avatar>
-                        <div className="bg-blue-50 border border-blue-100 rounded-2xl rounded-tl-sm p-4 max-w-[80%]">
-                            <p className="text-gray-800 mb-3">
-                                {`Perfect! Here are some authentic experiences I'd recommend adding:`}
-                            </p>
-                            <div className="space-y-2">
-                                {[
-                                    "Morning coffee at a local café in Gràcia",
-                                    "Vermouth hour at Bar Mut (11am-1pm)",
-                                    "Sunset at Bunkers del Carmel",
-                                    "Evening tapas crawl in El Born",
-                                ].map((item, index) => (
-                                        <div key={index} className="flex items-center gap-2">
-                                            <Button
-                                                size="sm"
-                                                className="bg-amber-200 hover:bg-amber-300 text-amber-800 h-6 px-2 text-xs"
-                                            >
-                                                <Plus className="w-3 h-3 mr-1" />
-                                                Add
-                                            </Button>
-                                            <span className="text-sm text-gray-700">{item}</span>
-                                        </div>
-                                    ))}
-                            </div>
-                        </div>
-                    </div>
                     { data?.map(message => {
                         if(message.role == 'user') return <UserMessage message={message} key={message.id}/>
 
@@ -176,9 +137,27 @@ function AssitantMessage({message}: AssitanteMessageProps) {
                 <AvatarFallback className="bg-amber-200 text-amber-800 font-bold">NG</AvatarFallback>
             </Avatar>
             <div className="bg-blue-50 border border-blue-100 rounded-2xl rounded-tl-sm p-4 max-w-[80%]">
-                <p className="text-gray-800">
+                <p className="text-gray-800 mb-3">
                     {message.content}
                 </p>
+                {message.options && message.options?.length > 0 ? 
+                    (
+                        <div className="space-y-2">
+                            {message.options.map((option, index) => (
+                                    <div key={index} className="flex items-center gap-2">
+                                        <Button
+                                            size="sm"
+                                            className="bg-amber-200 hover:bg-amber-300 text-amber-800 h-6 px-2 text-xs"
+                                        >
+                                            <Plus className="w-3 h-3 mr-1" />
+                                            Add
+                                        </Button>
+                                        <span className="text-sm text-gray-700">{option.name}</span>
+                                    </div>
+                                ))}
+                        </div>
+                    ): ''
+                }
             </div>
         </div>
     );

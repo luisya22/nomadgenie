@@ -33,8 +33,6 @@ export async function getTripById(id: number) {
         }
     });
 
-    console.log("This is the trip", trip, typeof trip);
-
     return trip;
 }
 
@@ -56,9 +54,6 @@ export async function addTrip(prevState: ActionState, formData: FormData): Promi
         activities: formData.getAll('activities'),
         travelGroup: formData.get('travelGroup')
     };
-
-    console.log("Data", rawData)
-
 
     const validationResult = tripFormSchema.safeParse(rawData);
 

@@ -16,7 +16,6 @@ export const trips = pgTable("trips", {
     status: varchar("status").default('PROCESSING').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().$onUpdate(() => new Date()).notNull(),
-
 });
 
 export const tripRelations = relations(trips, ({many}) => ({
@@ -57,7 +56,10 @@ export const itineraryDetails = pgTable("itinerary_details", {
     place: varchar('place').notNull(),
     description: varchar('description').notNull(),
     time: varchar('time').notNull(),
-    aproxTime: varchar('aprox_time').notNull()
+    aproxTime: varchar('aprox_time').notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().$onUpdate(() => new Date()).notNull()
+
 });
 
 export const itineraryDetailsRelations = relations(itineraryDetails, ({ one }) => ({
@@ -77,7 +79,15 @@ export const tripChatMessages = pgTable("trip_chat_messages", {
     tripId: integer('trip_id').references(() => trips.id, {onDelete: 'cascade'}).notNull(),
     role: varchar("role").notNull(), 
     content: text("content").notNull(),
-    status:  varchar("status").notNull().default("completed")
+    status:  varchar("status").notNull().default("completed"),
+    options: jsonb().$type<{
+        type: string,
+        name: string,
+        place: string,
+        description: string
+    }[]>().default([]),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().$onUpdate(() => new Date()).notNull()
 });
 
 export const tripChatMessagesRelations = relations(tripChatMessages, ({ one }) => ({

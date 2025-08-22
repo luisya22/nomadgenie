@@ -1,0 +1,1 @@
+ALTER TABLE "trip_chat_messages" ALTER COLUMN "options" SET DEFAULT '[]'::jsonb;

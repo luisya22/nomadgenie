@@ -29,6 +29,20 @@
       "when": 1755573017438,
       "tag": "0003_dusty_nighthawk",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1755863966183,
+      "tag": "0004_watery_the_stranger",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1755865169965,
+      "tag": "0005_workable_thaddeus_ross",
+      "breakpoints": true
     }
   ]
 }
